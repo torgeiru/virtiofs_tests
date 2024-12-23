@@ -3,7 +3,7 @@
   smp ? false, # Enable SMP support
 
   includeos ? import (builtins.fetchGit {
-        url = "https://github.com/includeos/IncludeOS.git";
+        url = "https://github.com/torgeiru/IncludeOS_virtiofs";
         ref = "main";
       }) { inherit smp; inherit withCcache; },
 }:

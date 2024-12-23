@@ -6,13 +6,15 @@
   smp ? false,
 
   # vmrunner path, for vmrunner development
-  vmrunner ? "",
-
-  includeos ? import (builtins.fetchGit {
-        url = "https://github.com/includeos/IncludeOS.git";
+  vmrunner ? import (builtins.fetchGit {   
+        url = "https://github.com/torgeiru/vmrunner_virtiofs";
         ref = "main";
       }) { inherit smp; inherit withCcache; },
 
+  includeos ? import (builtins.fetchGit {
+        url = "https://github.com/torgeiru/IncludeOS_virtiofs";
+        ref = "main";
+      }) { inherit smp; inherit withCcache; },
 }:
 let
   stdenv = includeos.stdenv;
@@ -37,12 +39,4 @@ pkgs.mkShell.override { inherit (includeos) stdenv; } rec {
   ];
 
   bootloader="${includeos}/boot/bootloader";
-
-  shellHook = ''
-    echo "To build the hello_world unikernel:"
-    echo " cmake src/CMakeLists.txt -B ./build"
-    echo " cd ./build"
-    echo " make"
-    echo " boot ./hello.elf.bin"
-  '';
 }
