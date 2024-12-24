@@ -8,8 +8,8 @@
   # vmrunner path, for vmrunner development
   vmrunner ? import (builtins.fetchGit {   
         url = "https://github.com/torgeiru/vmrunner_virtiofs";
-        ref = "main";
-      }) { inherit smp; inherit withCcache; },
+        ref = "master";
+      }) {},
 
   includeos ? import (builtins.fetchGit {
         url = "https://github.com/torgeiru/IncludeOS_virtiofs";
@@ -23,11 +23,10 @@ let
 in
 pkgs.mkShell.override { inherit (includeos) stdenv; } rec {
   packages = [
-    includeos.vmrunner
+    vmrunner
     stdenv.cc
     pkgs.buildPackages.cmake
     pkgs.buildPackages.nasm
-    pkgs.qemu
     pkgs.which
     pkgs.grub2
     pkgs.iputils
